@@ -19,9 +19,11 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.mariailieva.myhealth.FirebaseManager;
 import com.mariailieva.myhealth.R;
 import com.mariailieva.myhealth.activities.EditProfileActivity;
 import com.mariailieva.myhealth.activities.LoginActivity;
+import com.mariailieva.myhealth.activities.MainActivity;
 
 public class ProfileFragment extends Fragment {
 
@@ -35,10 +37,10 @@ public class ProfileFragment extends Fragment {
     private Button logOutBtn;
     private Button editBtn;
 
-    FirebaseAuth firebaseAuth;
-    FirebaseFirestore firebaseFirestore;
 
-    private String userId;
+    FirebaseManager firebaseManager;
+
+
 
     public ProfileFragment() {}
 
@@ -57,22 +59,9 @@ public class ProfileFragment extends Fragment {
         logOutBtn = v.findViewById(R.id.logOutBtn);
         editBtn = v.findViewById(R.id.editProfile);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setTimestampsInSnapshotsEnabled(true)
-                .build();
-        firebaseFirestore.setFirestoreSettings(settings);
-        userId = firebaseAuth.getCurrentUser().getUid();
+        firebaseManager = new FirebaseManager();
 
-        logOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,37 +79,27 @@ public class ProfileFragment extends Fragment {
                 if(weight.getText().toString().trim().length()>0){
                     intent.putExtra("weight", weight.getText().toString());
                 }
-                getContext().startActivity(intent);
+                v.getContext().startActivity(intent);
             }
         });
 
-        setData();
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                firebaseManager.signOut();
+
+            }
+        });
+
 
         return v;
     }
 
-
-    public void setData(){
-        DocumentReference docRef = firebaseFirestore.collection("users").document(userId);
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                name.setText(documentSnapshot.getString("name"));
-                email.setText(documentSnapshot.getString("email"));
-                dateOfBirth.setText(documentSnapshot.getString("dateOfBirth"));
-                if(documentSnapshot.contains("gender")){
-                    gender.setText(documentSnapshot.getString("gender"));
-                }
-                if(documentSnapshot.contains("weight")){
-                    weight.setText(documentSnapshot.get("weight").toString());
-                }
-                if(documentSnapshot.contains("height")){
-                    height.setText(documentSnapshot.get("height").toString());
-                }
-
-            }
-        });
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        firebaseManager.setProfileData(name, email, dateOfBirth, gender, weight, height);
     }
-
 }

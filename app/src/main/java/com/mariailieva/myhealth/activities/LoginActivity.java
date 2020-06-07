@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
         email = findViewById(R.id.emailText);
         password = findViewById(R.id.passwordText);
-        firebaseManager = new FirebaseManager(this);
+        firebaseManager = new FirebaseManager();
         register = findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             firebaseManager.signIn(emailTxt, passwordTxt, this);
         }
     }
+
 
 
 }

@@ -4,10 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mariailieva.myhealth.Article;
+import com.mariailieva.myhealth.model.Article;
 import com.mariailieva.myhealth.R;
 
 public class ArticleActivity extends AppCompatActivity {

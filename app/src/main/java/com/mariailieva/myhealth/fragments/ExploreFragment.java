@@ -17,7 +17,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.mariailieva.myhealth.Article;
+import com.mariailieva.myhealth.model.Article;
 import com.mariailieva.myhealth.ArticleAdapter;
 
 import com.mariailieva.myhealth.R;

@@ -63,6 +63,7 @@ public class MyHealthFragment extends Fragment {
                 setStatus();
             }
         });
+
         setStatus();
 
         firebaseManager.setHealthData(dateText, bpSystolicNum, bpDiastolicNum, levelBSNum);
@@ -128,8 +129,11 @@ public class MyHealthFragment extends Fragment {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
                                 @Nullable FirebaseFirestoreException e) {
+
                 bmiStatus.setText(calculateBMI(documentSnapshot.getLong("height").intValue(),documentSnapshot.getLong("weight").intValue()));
-                bpStatus.setText(calculateBP(documentSnapshot.getLong("BP systolic").intValue(), documentSnapshot.getLong("BP diastolic").intValue()));
+                if(bpDiastolicNum.getText().toString().trim().length() > 0 && bpSystolicNum.getText().toString().trim().length()>0) {
+                    bpStatus.setText(calculateBP(documentSnapshot.getLong("BP systolic").intValue(), documentSnapshot.getLong("BP diastolic").intValue()));
+                }
             }
 
         });

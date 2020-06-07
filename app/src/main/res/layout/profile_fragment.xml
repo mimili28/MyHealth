@@ -175,7 +175,4 @@
         android:layout_gravity="center"
         android:background="@drawable/button_outlined_red"/>
 
-
-
-
 </LinearLayout>

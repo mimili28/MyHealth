@@ -1,4 +1,4 @@
-package com.mariailieva.myhealth;
+package com.mariailieva.myhealth.model;
 
 import com.google.firebase.Timestamp;
 

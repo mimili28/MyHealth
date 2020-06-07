@@ -62,12 +62,39 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        String nameText;
+        String genderText;
+        String dateOfBirthText;
+        int heightText;
+        int weightText;
+
         super.onBackPressed();
-        String nameText = name.getText().toString();
-        String genderText = gender.getSelectedItem().toString();
-        String dateOfBirthText = dateOfBirth.getText().toString();
-        int heightText = Integer.parseInt(height.getText().toString());
-        int weightText = Integer.parseInt(weight.getText().toString());
+
+        if (name.getText().toString().trim().length() > 0){
+            nameText = name.getText().toString();
+        }else{
+            nameText = " ";
+        }
+        if (gender.getSelectedItem().toString().trim().length() > 0){
+            genderText = gender.getSelectedItem().toString();
+        }else{
+            genderText = " ";
+        }
+        if (dateOfBirth.getText().toString().trim().length() > 0){
+            dateOfBirthText = dateOfBirth.getText().toString();
+        }else{
+            dateOfBirthText = " ";
+        }
+        if (height.getText().toString().trim().length() > 0){
+            heightText = Integer.parseInt(height.getText().toString());
+        }else{
+            heightText = 0;
+        }
+        if (weight.getText().toString().trim().length() > 0){
+            weightText = Integer.parseInt(weight.getText().toString());
+        }else{
+            weightText = 0;
+        }
 
         firebaseManager.editProfileData(nameText,dateOfBirthText,genderText,heightText,weightText);
 

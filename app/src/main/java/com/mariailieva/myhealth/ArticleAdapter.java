@@ -1,23 +1,16 @@
 package com.mariailieva.myhealth;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.mariailieva.myhealth.activities.ArticleActivity;
-import com.mariailieva.myhealth.fragments.ExploreFragment;
-
-import java.io.Serializable;
+import com.mariailieva.myhealth.model.Article;
 
 public class ArticleAdapter extends FirestoreRecyclerAdapter<Article, ArticlesViewHolder> {
 

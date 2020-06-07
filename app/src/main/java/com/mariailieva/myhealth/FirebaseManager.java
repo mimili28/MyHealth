@@ -1,7 +1,10 @@
 package com.mariailieva.myhealth;
 
+import android.content.Context;
 import android.content.Intent;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,12 +22,14 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.mariailieva.myhealth.activities.LoginActivity;
 import com.mariailieva.myhealth.activities.MainActivity;
 import com.mariailieva.myhealth.activities.SignUpActivity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class FirebaseManager {
 
@@ -34,13 +39,13 @@ public class FirebaseManager {
     private FirebaseFirestore firebaseFirestore;
     private String userID;
 
-    public FirebaseManager(LoginActivity activity){
-        auth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        loginActivity = activity;
-
-
-    }
+//    public FirebaseManager(LoginActivity activity){
+//        auth = FirebaseAuth.getInstance();
+//        firebaseFirestore = FirebaseFirestore.getInstance();
+//        loginActivity = activity;
+//
+//
+//    }
 
     public FirebaseManager(SignUpActivity activity) {
         auth = FirebaseAuth.getInstance();
@@ -55,6 +60,7 @@ public class FirebaseManager {
     public FirebaseManager(){
         auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+
     }
 
     private void setupAuthStateListener(){
@@ -132,12 +138,11 @@ public class FirebaseManager {
                 });
     }
 
-//    public void signOut(){
-//
-//        auth.signOut();
-////        Intent intent = new Intent(activity, MainActivity.class);
-////        activity.startActivity(intent);
-//    }
+    public void signOut(){
+
+        ;
+
+    }
 
     public void editProfileData(String name, String dateOfBirth, String gender, int height, int weight){
         userID = auth.getCurrentUser().getUid();
@@ -169,19 +174,51 @@ public class FirebaseManager {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
                                 @Nullable FirebaseFirestoreException e) {
-                if(documentSnapshot.contains("date")) {
-                    date.setText(documentSnapshot.getString("date"));
-                }
-                if(documentSnapshot.contains("BP systolic")) {
-                    bpSystolic.setText(documentSnapshot.get("BP systolic").toString());
-                }
-                if(documentSnapshot.contains("BP diastolic")) {
-                    bpDiastolic.setText(documentSnapshot.get("BP diastolic").toString());
-                }
-                if(documentSnapshot.contains("BS level")) {
-                    bs.setText(documentSnapshot.get("BS level").toString());
+                if(auth.getCurrentUser() != null) {
+                    if (documentSnapshot.contains("date")) {
+                        date.setText(documentSnapshot.getString("date"));
+                    }
+                    if (documentSnapshot.contains("BP systolic")) {
+                        bpSystolic.setText(documentSnapshot.get("BP systolic").toString());
+                    }
+                    if (documentSnapshot.contains("BP diastolic")) {
+                        bpDiastolic.setText(documentSnapshot.get("BP diastolic").toString());
+                    }
+                    if (documentSnapshot.contains("BS level")) {
+                        bs.setText(documentSnapshot.get("BS level").toString());
+                    }
                 }
             }
         });
+    }
+    public void setProfileData(final TextView name, final TextView email, final TextView dateOfBirth, final TextView gender, final TextView weight, final TextView height){
+            userID = auth.getCurrentUser().getUid();
+            DocumentReference docRef = firebaseFirestore.collection("users").document(userID);
+            docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
+                                    @Nullable FirebaseFirestoreException e) {
+
+                    if (documentSnapshot.contains("name")) {
+                        name.setText(documentSnapshot.getString("name"));
+                    }
+                    if (documentSnapshot.contains("email")) {
+                        email.setText(documentSnapshot.getString("email"));
+                    }
+                    if (documentSnapshot.contains("dateOfBirth")) {
+                        dateOfBirth.setText(documentSnapshot.getString("dateOfBirth"));
+                    }
+                    if (documentSnapshot.contains("gender")) {
+                        gender.setText(documentSnapshot.getString("gender"));
+                    }
+                    if (documentSnapshot.contains("weight")) {
+                        weight.setText(documentSnapshot.get("weight").toString());
+                    }
+                    if (documentSnapshot.contains("height")) {
+                        height.setText(documentSnapshot.get("height").toString());
+                    }
+
+                }
+            });
     }
 }
