@@ -11,8 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="TextView"
-        android:fontFamily="serif"
+        android:background="#EBF8EB"
+        android:fontFamily="@font/delius_swash_caps"
         android:gravity="center_vertical"
-        android:textSize="20sp"/>
+        android:text="TextView"
+        android:textSize="20sp" />
 </LinearLayout>

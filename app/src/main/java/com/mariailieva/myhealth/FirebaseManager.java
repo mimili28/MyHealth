@@ -26,6 +26,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.mariailieva.myhealth.activities.LoginActivity;
 import com.mariailieva.myhealth.activities.MainActivity;
 import com.mariailieva.myhealth.activities.SignUpActivity;
+import com.mariailieva.myhealth.fragments.ProfileFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,18 +35,10 @@ import java.util.TreeMap;
 public class FirebaseManager {
 
     FirebaseAuth auth;
-    private LoginActivity loginActivity;
     private SignUpActivity signUpActivity;
     private FirebaseFirestore firebaseFirestore;
     private String userID;
 
-//    public FirebaseManager(LoginActivity activity){
-//        auth = FirebaseAuth.getInstance();
-//        firebaseFirestore = FirebaseFirestore.getInstance();
-//        loginActivity = activity;
-//
-//
-//    }
 
     public FirebaseManager(SignUpActivity activity) {
         auth = FirebaseAuth.getInstance();
@@ -85,9 +78,6 @@ public class FirebaseManager {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             System.out.println("LOGIN successful");
-//                            FirebaseDatabase.getInstance().getReference("users")
-//                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-
                             Intent intent = new Intent(activity, MainActivity.class);
                             activity.startActivity(intent);
                         }
@@ -95,7 +85,6 @@ public class FirebaseManager {
                             System.out.println("LOGIN failed" + task.getException());
                             Toast.makeText(activity, "Login failed:" +
                                     ( (FirebaseAuthException) task.getException()).getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                            //Toast.makeText(activity, "Wrong email or password!", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -132,16 +121,13 @@ public class FirebaseManager {
                             System.out.println("SIGNUP failed");
                             Toast.makeText(activity, "Sign up failed:" +
                                      task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                            //Toast.makeText(activity, "", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
     }
 
     public void signOut(){
-
-        ;
-
+        auth.signOut();
     }
 
     public void editProfileData(String name, String dateOfBirth, String gender, int height, int weight){
@@ -156,18 +142,17 @@ public class FirebaseManager {
         documentReference.update(user);
     }
 
-    public void editHealthData(String date, int levelBPSystolic,int levelBPDiastolic, int levelBS){
+    public void editHealthData(String date, int levelBPSystolic,int levelBPDiastolic){
         userID = auth.getCurrentUser().getUid();
         DocumentReference documentReference = firebaseFirestore.collection("users").document(userID);
         Map<String,Object> user = new HashMap<>();
         user.put("date", date);
         user.put("BP systolic", levelBPSystolic);
         user.put("BP diastolic", levelBPDiastolic);
-        user.put("BS level", levelBS);
         documentReference.update(user);
     }
 
-    public void setHealthData(final EditText date,final EditText bpSystolic, final EditText bpDiastolic,final EditText bs){
+    public void setHealthData(final EditText date,final EditText bpSystolic, final EditText bpDiastolic){
         userID = auth.getCurrentUser().getUid();
         DocumentReference docRef = firebaseFirestore.collection("users").document(userID);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -184,9 +169,6 @@ public class FirebaseManager {
                     if (documentSnapshot.contains("BP diastolic")) {
                         bpDiastolic.setText(documentSnapshot.get("BP diastolic").toString());
                     }
-                    if (documentSnapshot.contains("BS level")) {
-                        bs.setText(documentSnapshot.get("BS level").toString());
-                    }
                 }
             }
         });
@@ -194,31 +176,33 @@ public class FirebaseManager {
     public void setProfileData(final TextView name, final TextView email, final TextView dateOfBirth, final TextView gender, final TextView weight, final TextView height){
             userID = auth.getCurrentUser().getUid();
             DocumentReference docRef = firebaseFirestore.collection("users").document(userID);
-            docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            docRef.addSnapshotListener( new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
                                     @Nullable FirebaseFirestoreException e) {
-
-                    if (documentSnapshot.contains("name")) {
-                        name.setText(documentSnapshot.getString("name"));
+                    if (documentSnapshot != null && documentSnapshot.exists() && auth.getCurrentUser() != null) {
+                        if (documentSnapshot.contains("name")) {
+                            name.setText(documentSnapshot.getString("name"));
+                        }
+                        if (documentSnapshot.contains("email")) {
+                            email.setText(documentSnapshot.getString("email"));
+                        }
+                        if (documentSnapshot.contains("dateOfBirth")) {
+                            dateOfBirth.setText(documentSnapshot.getString("dateOfBirth"));
+                        }
+                        if (documentSnapshot.contains("gender")) {
+                            gender.setText(documentSnapshot.getString("gender"));
+                        }
+                        if (documentSnapshot.contains("weight")) {
+                            weight.setText(documentSnapshot.get("weight").toString());
+                        }
+                        if (documentSnapshot.contains("height")) {
+                            height.setText(documentSnapshot.get("height").toString());
+                        }
                     }
-                    if (documentSnapshot.contains("email")) {
-                        email.setText(documentSnapshot.getString("email"));
-                    }
-                    if (documentSnapshot.contains("dateOfBirth")) {
-                        dateOfBirth.setText(documentSnapshot.getString("dateOfBirth"));
-                    }
-                    if (documentSnapshot.contains("gender")) {
-                        gender.setText(documentSnapshot.getString("gender"));
-                    }
-                    if (documentSnapshot.contains("weight")) {
-                        weight.setText(documentSnapshot.get("weight").toString());
-                    }
-                    if (documentSnapshot.contains("height")) {
-                        height.setText(documentSnapshot.get("height").toString());
-                    }
-
                 }
             });
     }
+
+
 }

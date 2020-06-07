@@ -1,4 +1,4 @@
-package com.mariailieva.myhealth;
+package com.mariailieva.myhealth.adapters;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,8 +9,10 @@ import androidx.annotation.NonNull;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.mariailieva.myhealth.R;
 import com.mariailieva.myhealth.activities.ArticleActivity;
 import com.mariailieva.myhealth.model.Article;
+import com.mariailieva.myhealth.view.ArticlesViewHolder;
 
 public class ArticleAdapter extends FirestoreRecyclerAdapter<Article, ArticlesViewHolder> {
 
@@ -20,7 +22,7 @@ public class ArticleAdapter extends FirestoreRecyclerAdapter<Article, ArticlesVi
 
     @Override
     protected void onBindViewHolder(@NonNull final ArticlesViewHolder holder, int position, @NonNull final Article model) {
-        holder.titleText.setText(model.getTitle());
+        holder.getTitleText().setText(model.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -37,10 +37,7 @@ public class ProfileFragment extends Fragment {
     private Button logOutBtn;
     private Button editBtn;
 
-
     FirebaseManager firebaseManager;
-
-
 
     public ProfileFragment() {}
 
@@ -61,8 +58,6 @@ public class ProfileFragment extends Fragment {
 
         firebaseManager = new FirebaseManager();
 
-
-
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,24 +77,22 @@ public class ProfileFragment extends Fragment {
                 v.getContext().startActivity(intent);
             }
         });
-
         logOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 firebaseManager.signOut();
 
             }
         });
-
-
         return v;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onStart(){
+        super.onStart();
         firebaseManager.setProfileData(name, email, dateOfBirth, gender, weight, height);
     }
+
 }

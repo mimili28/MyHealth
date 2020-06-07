@@ -4,13 +4,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:divider="@drawable/divider"
+        android:showDividers="middle">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -36,8 +41,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -61,8 +64,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -86,8 +87,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -111,8 +110,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -136,8 +133,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -157,12 +152,15 @@
             android:fontFamily="serif"/>
 
     </LinearLayout>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/editProfile"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Edit profile"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:background="@drawable/button_outlined_green"
         />
@@ -172,6 +170,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Log out"
+        android:layout_marginTop="120dp"
         android:layout_gravity="center"
         android:background="@drawable/button_outlined_red"/>
 
