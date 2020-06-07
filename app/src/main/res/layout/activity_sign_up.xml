@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.SignUpActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="Sign up"
+        android:textColor="#54DD15"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/fullNameText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="full name"
+        android:textColorHint="#54DD15"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/ic_person_green"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit"
+        android:padding="20dp"/>
+
+    <EditText
+        android:id="@+id/emailText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:inputType="textEmailAddress"
+        android:hint="email"
+        android:textColorHint="#54DD15"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/ic_email_green"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit"
+        android:padding="20dp" />
+
+
+    <EditText
+        android:id="@+id/passwordText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:textColorHint="#54DD15"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/ic_lock_green"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit"
+        android:padding="20dp"/>
+
+
+    <EditText
+        android:id="@+id/dateOfBirth"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Date of Birth"
+        android:inputType="date"
+        android:textColorHint="#54DD15"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/ic_date_green"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit"
+        android:padding="20dp"/>
+
+
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:onClick="signUp"
+        android:text="Sign up"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:background="@drawable/button" />
+
+</LinearLayout>
